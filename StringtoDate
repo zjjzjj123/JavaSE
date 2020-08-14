@@ -1,0 +1,33 @@
+package com.atguigu.utils;
+
+
+import org.springframework.core.convert.converter.Converter;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+//自定义类型转换器
+//需要自己通过springmvc的配置文件加载到容器中 spring也有自己的文件转换格式有时候我们需要自己定义
+public class StringToDate implements Converter<String , Date> {
+
+    @Override
+    public Date convert(String s) {
+
+        if(s == null)
+        {
+            throw new RuntimeException("字符串不能为空");
+        }
+
+        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-DD");
+            Date date = df.parse(s);
+            return date;
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException("类型转换错误");
+        }
+
+    }
+}
